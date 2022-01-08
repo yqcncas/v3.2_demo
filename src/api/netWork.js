@@ -12,6 +12,7 @@ const service = axios.create(
 )
 
 service.interceptors.request.use(config => {
+  config.headers['Accept-Language'] = localStorage.getItem('lang')
   if (localStorage.getItem('token')) {
     // 是否登录超时
     if (isCheckTimeout()) {

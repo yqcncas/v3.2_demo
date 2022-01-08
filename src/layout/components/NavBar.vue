@@ -3,6 +3,7 @@
     <hamburger class="hamburger-container" />
     <breadcrumb class="breadcrumb-container"></breadcrumb>
     <div class="right-menu">
+      <guide class="right-menu-item hover-effect" />
       <header-search class="right-menu-item hover-effect" />
       <screen-full class="right-menu-item hover-effect" />
       <theme-picker class="right-menu-item hover-effect" />
@@ -43,6 +44,7 @@ import LangSelect from './LangSelect'
 import ThemePicker from '@/components/ThemePicker'
 import ScreenFull from '@/components/ScreenFull'
 import HeaderSearch from '@/components/HeaderSearch'
+import Guide from './/Guide'
 const store = useStore()
 const logout = () => {
   store.dispatch('user/logout')

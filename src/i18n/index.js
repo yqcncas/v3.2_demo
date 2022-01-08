@@ -3,6 +3,7 @@ import { createI18n } from 'vue-i18n'
 import enLocale from './en'
 import zhLocale from './zh'
 import { watch } from 'vue'
+import store from '@/store'
 // 创建数据源
 const message = {
   en: {
@@ -58,8 +59,7 @@ const i18n = createI18n({
 export default i18n
 
 export function watchSwitchlang(...info) {
-  watch(localStorage.getItem('lang'), () => {
-    console.log('131313123')
-    info.forEach(cb => cb(localStorage.getItem('lang')))
-  }, { deep: true, immediate: true })
+  watch(store.getters.lang, () => {
+    info.forEach(cb => cb(store.getters.lang))
+  }, { deep: true })
 }

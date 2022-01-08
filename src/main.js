@@ -10,11 +10,13 @@ import '@/router/permission.js'
 import i18n from '@/i18n'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import * as ELIcons from '@element-plus/icons-vue'
+import installFilter from '@/utils/filter.js'
 
 const app = createApp(App)
 for (const iconName in ELIcons) {
 app.component(iconName, ELIcons[iconName])
 }
+installFilter(app)
 
 SvgIcon(app)
 
