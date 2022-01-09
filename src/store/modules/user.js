@@ -1,6 +1,6 @@
 import { login, getUserInfo } from '@/api/sys.js'
 import md5 from 'md5'
-import router from '@/router'
+import router, { resetRouter } from '@/router'
 import { setTimeStap } from '@/utils/auth.js'
 export default {
   namespaced: true,
@@ -45,6 +45,7 @@ export default {
     },
     // 退出
     logout ({ commit }) {
+      resetRouter()
       commit('setToken', '')
       commit('setUserInfo', {})
       localStorage.clear()

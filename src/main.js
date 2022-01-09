@@ -11,13 +11,16 @@ import i18n from '@/i18n'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import * as ELIcons from '@element-plus/icons-vue'
 import installFilter from '@/utils/filter.js'
+import print from 'vue3-print-nb'
+import installDirective from '@/directive'
 
 const app = createApp(App)
 for (const iconName in ELIcons) {
 app.component(iconName, ELIcons[iconName])
 }
+installDirective(app)
 installFilter(app)
 
 SvgIcon(app)
 
-app.use(store).use(router).use(ElementPlus, { locale: localStorage.getItem('lang') === '1' ? zhCn : '' }).use(i18n).mount('#app')
+app.use(store).use(router).use(ElementPlus, { locale: localStorage.getItem('lang') === '1' ? zhCn : '' }).use(i18n).use(print).mount('#app')

@@ -31,7 +31,6 @@ export const filterRoutes = routes => {
  * 根据routes数据 返回menu信息数据
  */
  export const generateMenus = (routes, basePath = '') => {
-  //  console.log(routes)
    const result = []
    routes.forEach(item => {
      // 如果没children 且不存在meta 直接返回即可 也就是login 401 404这些页面
@@ -58,11 +57,11 @@ export const filterRoutes = routes => {
       if (route.meta.icon && route.meta.title) {
         result.push(route)
       }
+     }
       // 若数据 有children 有 meta 则就是插入子级 并带上基础路径
       if (!isNull(item.children)) {
         route.children.push(...generateMenus(item.children, route.path))
       }
-     }
    })
    return result
  }

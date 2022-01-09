@@ -1,10 +1,12 @@
 <template>
   <div class="user-info-container">
     <el-card class="print-box">
-      <el-button type="primary">{{ $t('userInfo.print') }}</el-button>
+      <el-button type="primary" v-print="printObj">{{
+        $t('userInfo.print')
+      }}</el-button>
     </el-card>
     <el-card>
-      <div class="user-info-box">
+      <div class="user-info-box" id="printBox">
         <!-- 标题 -->
         <h2 class="title">{{ $t('userInfo.title') }}</h2>
         <!-- 头部 -->
@@ -97,8 +99,46 @@ const getUserDetail = async () => {
 }
 getUserDetail()
 watchSwitchLang(getUserDetail)
+
+const printLoading = ref(false)
+const printObj = ref({
+  id: 'printBox', // 打印的元素id
+  popTitle: '标题', // 打印的标题
+  extraCss:
+    'https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.compat.css, https://cdn.bootcdn.net/ajax/libs/hover.css/2.3.1/css/hover-min.css',
+  extraHead: '<meta http-equiv="Content-Language"content="zh-cn"/>',
+  beforeOpenCallback(vue) {
+    // 打印前
+    printLoading.value = true
+    console.log('打开之前')
+  },
+  openCallback(vue) {
+    // 执行打印
+    printLoading.value = false
+    console.log('执行了打印')
+  },
+  closeCallback(vue) {
+    console.log('关闭了打印工具')
+  }
+})
 </script>
 
+<style media="print" scoped>
+@page {
+  size: auto; /* auto is the initial value */
+  margin: 3mm; /* this affects the margin in the printer settings */
+}
+
+html {
+  background-color: #ffffff;
+  margin: 0px; /* this affects the margin on the html before sending to printer */
+}
+
+body {
+  border: solid 1px blue;
+  margin: 10mm 15mm 10mm 15mm; /* margin you want for the content */
+}
+</style>
 <style lang="scss" scoped>
 .print-box {
   margin-bottom: 20px;

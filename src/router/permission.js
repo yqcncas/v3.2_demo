@@ -10,7 +10,14 @@ router.beforeEach(async (to, from, next) => {
     } else {
       // 判断用户资料是否存在 不存在则调用获取用户信息
       if (store.getters.hasUserInfo) {
-        await store.dispatch('user/userInfo')
+        const { permission } = await store.dispatch('user/userInfo')
+        // 处理权限
+        const filterRoutes = await store.dispatch('permission/filterRoutes', permission.menus)
+        filterRoutes.forEach(item => {
+          router.addRoute(item)
+        })
+        // 添加完路由 需要进行主动跳转
+        return next(to.path)
       }
       next()
     }

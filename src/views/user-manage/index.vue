@@ -2,9 +2,12 @@
   <div class="user-manage-container">
     <el-card class="header">
       <div>
-        <el-button type="primary" @click="importExcel">{{
-          $t('excel.importExcel')
-        }}</el-button>
+        <el-button
+          type="primary"
+          @click="importExcel"
+          v-permission="['importUser']"
+          >{{ $t('excel.importExcel') }}</el-button
+        >
         <el-button type="success" @click="onToExcelClick">{{
           $t('excel.exportExcel')
         }}</el-button>
@@ -49,12 +52,20 @@
               @click="onClickDetailInfo(row._id)"
               >{{ $t('excel.show') }}</el-button
             >
-            <el-button type="info" size="mini">{{
-              $t('excel.showRole')
-            }}</el-button>
-            <el-button type="danger" size="mini" @click="onRemoveClick(row)">{{
-              $t('excel.remove')
-            }}</el-button>
+            <el-button
+              type="info"
+              size="mini"
+              @click="onClickRoles(row)"
+              v-permission="['distributeRole']"
+              >{{ $t('excel.showRole') }}</el-button
+            >
+            <el-button
+              type="danger"
+              size="mini"
+              @click="onRemoveClick(row)"
+              v-permission="['removeUser']"
+              >{{ $t('excel.remove') }}</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -70,6 +81,12 @@
       </el-pagination>
     </el-card>
     <export-excel v-model="dialogVisible" />
+    <RolesDialog
+      v-if="roleDialogVisible"
+      v-model="roleDialogVisible"
+      :userId="selectUserId"
+      @updateRole="getListData"
+    />
   </div>
 </template>
 
@@ -81,6 +98,7 @@ import { useRouter } from 'vue-router'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import ExportExcel from './components/ExportExcel'
+import RolesDialog from './components/roles.vue'
 
 const i18n = useI18n()
 const tableData = ref([])
@@ -90,6 +108,13 @@ const limit = ref({
   size: 2
 })
 const dialogVisible = ref(false)
+const roleDialogVisible = ref(false)
+const selectUserId = ref('')
+const onClickRoles = (row) => {
+  console.log(row)
+  roleDialogVisible.value = true
+  selectUserId.value = row._id
+}
 const getListData = async () => {
   const res = await getUserManageList(limit.value)
   tableData.value = res.list

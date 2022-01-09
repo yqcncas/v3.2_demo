@@ -26,6 +26,7 @@ import variables from '@/styles/variables.scss'
 const router = useRouter()
 const routes = computed(() => {
   const dealRouters = filterRoutes(router.getRoutes())
+  console.log(generateMenus(dealRouters))
   return generateMenus(dealRouters)
 })
 
