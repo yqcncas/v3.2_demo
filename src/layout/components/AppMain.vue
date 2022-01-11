@@ -35,7 +35,6 @@ const getTitle = (route) => {
 watch(
   route,
   (val, oldV) => {
-    console.log('执行')
     if (!isTags(val.path)) return
     const { fullPath, meta, name, params, path, query } = val
     console.log(fullPath, meta, name, params, path, query)

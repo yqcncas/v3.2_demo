@@ -148,6 +148,7 @@ export const publicRoutes = [
 ]
 
 const router = createRouter({
+  scrollBehavior: () => ({ y: 0 }),
   history: createWebHashHistory(),
   routes: publicRoutes
 })
